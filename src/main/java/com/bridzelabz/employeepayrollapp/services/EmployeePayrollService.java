@@ -1,6 +1,7 @@
 package com.bridzelabz.employeepayrollapp.services;
 
 import com.bridzelabz.employeepayrollapp.dto.EmployeePayrollDTO;
+import com.bridzelabz.employeepayrollapp.exceptions.EmployeePayrollException;
 import com.bridzelabz.employeepayrollapp.model.EmployeePayrollData;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,10 @@ public class EmployeePayrollService implements IEmployeePayrollService{
 
     @Override
     public EmployeePayrollData getEmployeePayrollDataById(int empId) {
-        return employeePayrollDataList.get(empId-1);
+        return employeePayrollDataList.stream()
+                                      .filter(empData -> empData.getEmployeeId() == empId)
+                                      .findFirst()
+                                      .orElseThrow(() -> new EmployeePayrollException("Employee Not Found"));
     }
 
     @Override
@@ -41,6 +45,10 @@ public class EmployeePayrollService implements IEmployeePayrollService{
 
     @Override
     public void deleteEmployeePayrollData(int empId) {
+        employeePayrollDataList.stream()
+                .filter(empData -> empData.getEmployeeId() == empId)
+                .findAny()
+                .orElseThrow(() -> new EmployeePayrollException("Employee Not Found"));
         employeePayrollDataList.remove(empId-1);
     }
 }
