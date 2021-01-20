@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridzelabz.employeepayrollapp.dto.EmployeePayrollDTO;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -41,7 +42,7 @@ public class EmployeePayrollController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDTO> addEmployeePayrollData(@RequestBody EmployeePayrollDTO empPayrollDTO) {
+    public ResponseEntity<ResponseDTO> addEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
         EmployeePayrollData employeePayrollData = employeePayrollService.createEmployeePayrollData(empPayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Created Employee Payroll Data Successfully: ", employeePayrollData);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
@@ -50,7 +51,7 @@ public class EmployeePayrollController {
     @PutMapping("/update/{empId}")
     public ResponseEntity<ResponseDTO> updateEmployeePayrollData(
             @PathVariable("empId") int empId,
-            @RequestBody EmployeePayrollDTO empPayrollDTO) {
+            @Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
         EmployeePayrollData employeePayrollData = employeePayrollService.updateEmployeePayrollData(empId, empPayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Update Employee Payroll Data Successfully: ", employeePayrollData);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
