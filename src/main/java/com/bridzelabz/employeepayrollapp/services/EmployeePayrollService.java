@@ -23,7 +23,7 @@ public class EmployeePayrollService implements IEmployeePayrollService{
         return employeePayrollDataList.stream()
                                       .filter(empData -> empData.getEmployeeId() == empId)
                                       .findFirst()
-                                      .orElseThrow(() -> new EmployeePayrollException("Employee Not Found"));
+                                      .orElseThrow(() -> new EmployeePayrollException("Employee Not Found for Id: " + empId));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class EmployeePayrollService implements IEmployeePayrollService{
         employeePayrollDataList.stream()
                 .filter(empData -> empData.getEmployeeId() == empId)
                 .findAny()
-                .orElseThrow(() -> new EmployeePayrollException("Employee Not Found"));
+                .orElseThrow(() -> new EmployeePayrollException("Employee Not Found for Id: " + empId));
         employeePayrollDataList.remove(empId-1);
     }
 }
