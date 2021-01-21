@@ -3,6 +3,8 @@ package com.bridzelabz.employeepayrollapp.services;
 import com.bridzelabz.employeepayrollapp.dto.EmployeePayrollDTO;
 import com.bridzelabz.employeepayrollapp.exceptions.EmployeePayrollException;
 import com.bridzelabz.employeepayrollapp.model.EmployeePayrollData;
+import com.bridzelabz.employeepayrollapp.repository.EmployeePayrollRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,6 +12,9 @@ import java.util.List;
 
 @Service
 public class EmployeePayrollService implements IEmployeePayrollService{
+
+    @Autowired
+    private EmployeePayrollRepository employeePayrollRepository;
 
     private List<EmployeePayrollData> employeePayrollDataList = new ArrayList<>();
 
@@ -31,7 +36,7 @@ public class EmployeePayrollService implements IEmployeePayrollService{
         EmployeePayrollData employeePayrollData = null;
         employeePayrollData = new EmployeePayrollData(1, employeePayrollDTO);
         employeePayrollDataList.add(employeePayrollData);
-        return employeePayrollData;
+        return employeePayrollRepository.save(employeePayrollData);
     }
 
     @Override
